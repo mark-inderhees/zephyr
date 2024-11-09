@@ -184,6 +184,7 @@ class SyscallParseException(Exception):
 
 
 def typename_split(item):
+    item = item.replace("\n", "")
     if "[" in item:
         raise SyscallParseException(
             "Please pass arrays to syscalls as pointers, unable to process '%s'" %
