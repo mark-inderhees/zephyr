@@ -7,6 +7,13 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h>
+#include <hello_driver.h>
+
+LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
+
+#define HELLO_DRIVER_NODE DT_NODELABEL(hello_driver)
+
 
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   1000
@@ -24,6 +31,20 @@ int main(void)
 {
 	int ret;
 	bool led_state = true;
+
+	const struct device *hello_driver_dev = DEVICE_DT_GET(HELLO_DRIVER_NODE);
+
+	if (!device_is_ready(hello_driver_dev)) {
+		LOG_ERR("Hello driver is not ready.");
+		return 0;
+	}
+
+	LOG_INF("Hello from the app, retrieved from device: %p", hello_driver_dev);
+
+	ret = hello_driver_print_message(hello_driver_dev);
+	if (ret != 0) {
+		LOG_ERR("Failed to print message from hello driver: %d", ret);
+	}
 
 	if (!gpio_is_ready_dt(&led)) {
 		return 0;
