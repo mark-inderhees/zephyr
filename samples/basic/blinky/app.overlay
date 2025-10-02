@@ -1,0 +1,7 @@
+/ {
+	hello_driver: hello_driver {
+		compatible = "my-company,hello-driver";
+		label = "HELLO_DRIVER_0";
+		message = "Hello from the device driver!";
+	};
+};
