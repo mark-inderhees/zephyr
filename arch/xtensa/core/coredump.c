@@ -126,7 +126,7 @@ void arch_coredump_info_dump(const struct arch_esf *esf)
 	#elif CONFIG_SOC_XTENSA_DC233C
 		arch_blk.soc = XTENSA_SOC_DC233C;
 	#else
-		arch_blk.soc = XTENSA_SOC_UNKNOWN;
+		arch_blk.soc = CONFIG_XTENSA_COREDUMP_SOC_ID;
 	#endif
 
 	/* Set in top-level CMakeLists.txt for use with Xtensa coredump */

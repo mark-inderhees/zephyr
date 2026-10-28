@@ -34,6 +34,17 @@ config XTENSA_ENABLE_BACKTRACE
 	help
 	  Enable this config option to print backtrace on panic exception
 
+config XTENSA_COREDUMP_SOC_ID
+	hex
+	depends on DEBUG_COREDUMP
+	range 0x0 0xff
+	default 0x0
+	help
+	  SoC identifier stored in the Xtensa coredump architecture block
+	  when the SoC has no built-in identifier. Set this in the SoC's
+	  Kconfig.defconfig. The host decoder must recognize the identifier
+	  and use a matching register layout. Zero identifies an unknown SoC.
+
 config XTENSA_SMALL_VECTOR_TABLE_ENTRY
 	bool "Workaround for small vector table entries"
 	help

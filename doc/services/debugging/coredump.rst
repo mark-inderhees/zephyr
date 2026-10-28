@@ -334,6 +334,18 @@ to the target architecture (e.g. CPU registers)
      - ``uint8_t[]``
      - Contains target architecture specific data.
 
+Xtensa SoC identification
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Xtensa coredumps include a SoC identifier that selects the host decoder's register layout.
+SoCs with built-in identifiers retain those values. Other SoCs can supply
+:kconfig:option:`CONFIG_XTENSA_COREDUMP_SOC_ID` from their ``Kconfig.defconfig``.
+The default value, zero, identifies an unknown SoC. The identifier must fit in one byte.
+
+Setting the identifier does not change the register data or add a host decoder.
+The host's ``scripts/coredump/gdbstubs/arch/xtensa.py`` must recognize the identifier
+and match both the captured register layout and the target GDB's register numbers.
+
 Threads Metadata Block
 ---------------------------
 
