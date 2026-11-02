@@ -100,6 +100,9 @@ set_compiler_property(PROPERTY no_printf_return_value)
 # Flags for coverage generation
 set_compiler_property(PROPERTY coverage)
 
+# Flags to disable coverage instrumentation on a specific source file.
+set_compiler_property(PROPERTY no_coverage)
+
 # Compiler-specific flags for heap KASAN (-fsanitize=kernel-address + tuning params).
 set_compiler_property(PROPERTY heap_kasan)
 

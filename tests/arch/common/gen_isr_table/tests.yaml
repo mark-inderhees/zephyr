@@ -4,6 +4,13 @@ common:
     - interrupt
     - isr_table
 tests:
+  arch.interrupt.gen_isr_table.coverage:
+    platform_allow: mps2/an385
+    build_only: true
+    extra_configs:
+      - CONFIG_FORCE_COVERAGE=y
+      - CONFIG_COVERAGE=y
+      - CONFIG_COVERAGE_GCOV_HEAP_SIZE=0
   arch.interrupt.gen_isr_table.arm_baseline: &arm-baseline
     platform_allow: qemu_cortex_m3
     filter: CONFIG_GEN_ISR_TABLES and CONFIG_ARMV6_M_ARMV8_M_BASELINE

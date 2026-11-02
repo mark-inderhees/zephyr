@@ -1643,6 +1643,26 @@ get_property(GASF GLOBAL PROPERTY GENERATED_APP_SOURCE_FILES)
 get_property(GKOF GLOBAL PROPERTY GENERATED_KERNEL_OBJECT_FILES)
 get_property(GKSF GLOBAL PROPERTY GENERATED_KERNEL_SOURCE_FILES)
 
+if(CONFIG_COVERAGE)
+  # These sources replace placeholders between link stages. Instrumentation must not
+  # introduce additional code or data after symbol addresses have been fixed.
+  set(coverage_sources "${ZEPHYR_BASE}/misc/empty_file.c")
+  foreach(source IN LISTS GASF GKSF)
+    cmake_path(ABSOLUTE_PATH source BASE_DIRECTORY "${PROJECT_BINARY_DIR}")
+    list(APPEND coverage_sources "${source}")
+  endforeach()
+  set(coverage_source_dirs "${CMAKE_CURRENT_SOURCE_DIR}")
+  if(TARGET isr_tables)
+    get_target_property(isr_source_dir isr_tables SOURCE_DIR)
+    list(APPEND coverage_sources "${isr_source_dir}/isr_tables.c")
+    list(APPEND coverage_source_dirs "${isr_source_dir}")
+  endif()
+  set_property(SOURCE ${coverage_sources}
+    DIRECTORY ${coverage_source_dirs}
+    APPEND PROPERTY COMPILE_OPTIONS $<TARGET_PROPERTY:compiler,no_coverage>
+  )
+endif()
+
 # FIXME: Is there any way to get rid of empty_file.c?
 add_executable(       ${ZEPHYR_LINK_STAGE_EXECUTABLE} misc/empty_file.c ${GASF})
 toolchain_ld_link_elf(

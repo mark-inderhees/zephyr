@@ -178,6 +178,7 @@ set_property(TARGET compiler-cpp PROPERTY no_rtti "-fno-rtti")
 
 # gcc flags for coverage generation
 set_compiler_property(PROPERTY coverage -fprofile-arcs -ftest-coverage -fno-inline)
+set_compiler_property(PROPERTY no_coverage -fno-profile-arcs -fno-test-coverage)
 
 # gcc flags for heap KASAN instrumentation.
 set_compiler_property(PROPERTY heap_kasan

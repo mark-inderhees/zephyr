@@ -137,6 +137,13 @@ else()
   set_compiler_property(PROPERTY coverage --coverage -fno-inline)
 endif()
 
+set_compiler_property(PROPERTY no_coverage
+  -fno-profile-instr-generate
+  -fno-coverage-mapping
+  -fno-profile-arcs
+  -fno-test-coverage
+)
+
 # clang flags for heap KASAN instrumentation.
 set_compiler_property(PROPERTY heap_kasan
   -fsanitize=kernel-address
